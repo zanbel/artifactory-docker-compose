@@ -1,57 +1,66 @@
 # IMPORTANT: the environment variable below is based on the environment of the running docker-compose
 # In other words if you use the docker-compose container rather than running it as yourself it won't work.
-# 
+#
 # $HOME : home directory (already set by the system hopefuly)
 # $namespace : some namespace you should have set with `export namespace=mydemo`
 #
 sharedvolume:
   image: busybox
-  container_name: sharedvolume-$namespace
-  volumes: 
+  container_name: sharedvolume-mydemo
+  volumes:
     - "/var/opt/jfrog/cluster"
     - "/var/lib/mysql"
 
 artifactorysc_1:
   build: artifactory
-  container_name: artifactorysc_1-$namespace
+  container_name: artifactorysc_1-mydemo
   links:
     - mysqlsc:mysql
   privileged: true
   volumes:
-    - "$art_licenses/artifactory-H1.lic:/etc/opt/jfrog/artifactory/artifactory.lic:ro"
+    - "/Users/zanbel/playground/docker-compose-demos/licenses/artifactory-H1.lic:/etc/opt/jfrog/artifactory/artifactory.lic"
     - "/etc/opt/jfrog/artifactory"
     - "/var/opt/jfrog/artifactory/data"
 
-  volumes_from: 
+  volumes_from:
     - sharedvolume
 
 artifactorysc_2:
   build: artifactory
-  container_name: artifactorysc_2-$namespace
+  container_name: artifactorysc_2-mydemo
   links:
     - mysqlsc:mysql
   privileged: true
   volumes:
-    - "$art_licenses/artifactory-H2.lic:/etc/opt/jfrog/artifactory/artifactory.lic:ro"
+    - "/Users/zanbel/playground/docker-compose-demos/licenses/artifactory-H2.lic:/etc/opt/jfrog/artifactory/artifactory.lic"
     - "/etc/opt/jfrog/artifactory"
     - "/var/opt/jfrog/artifactory/data"
-  volumes_from: 
+  volumes_from:
     - sharedvolume
 
 nginxsc:
   build: nginx
-  container_name: nginxsc-$namespace
+  container_name: nginxsc-mydemo
   ports:
     - "80:80"
     - "443:443"
-    - "5000-5010:5000-5010"
+    - "5000:5000"
+    - "5001:5001"
+    - "5002:5002"
+    - "5003:5003"
+    - "5004:5004"
+    - "5005:5005"
+    - "5006:5006"
+    - "5007:5007"
+    - "5008:5008"
+    - "5009:5009"
   links:
     - artifactorysc_1:artifactory_1
     - artifactorysc_2:artifactory_2
 
 mysqlsc:
   image: mysql
-  container_name: mysqlsc-$namespace
+  container_name: mysqlsc-mydemo
   environment:
     - MYSQL_ROOT_PASSWORD=password
     - MYSQL_DATABASE=artdb

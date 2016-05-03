@@ -45,11 +45,11 @@ function updateNginxConfIfNeeded {
 	local diffWithCurrentConf=$(diff $NGINX_CONF <(echo "$reverseProxyConf"))
 	if [ -n "$diffWithCurrentConf" ]
 	then
-		echo "ART CONFIG CHANGED : $diffWithCurrentConf" 
+		echo "ART CONFIG CHANGED : $diffWithCurrentConf"
 		echo "UPDATING NGINX CONF at  $NGINX_CONF"
 		echo "$reverseProxyConf" > "$NGINX_CONF"
 		/etc/init.d/nginx reload
-	fi	
+	fi
 }
 
 function getReverseProxyConfFromPrimaryNode {
@@ -67,7 +67,7 @@ function waitForPrimaryNode {
 		echo "."
 		sleep 1
 	done
-	echo "PRIMARY NODE IS UP !"
+	echo "PRIMARY NODE IS UP"
 }
 
 # Update the reverse proxy config in Artifactory if needed

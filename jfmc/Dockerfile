@@ -1,7 +1,7 @@
 FROM java
 MAINTAINER Alexis Tual <alexist@jfrog.com>
 
-ENV MC_VERSION 1.0
+ENV MC_VERSION 1.1
 
 RUN apt-get update;\
     apt-get install unzip curl -y;\
