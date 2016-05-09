@@ -14,6 +14,6 @@ RUN curl https://bintray.com/artifact/download/bintray/jcenter/mysql/mysql-conne
 COPY ["server.xml", "/opt/jfrog/artifactory/tomcat/conf/server.xml"]
 COPY ["nginx.ftl", "/var/opt/jfrog/artifactory/etc/nginx.ftl"]
 
-EXPOSE ["8081", "10042"]
+EXPOSE 8081 10042
 
 CMD /run.sh
